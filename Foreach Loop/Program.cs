@@ -1,31 +1,32 @@
-﻿using System.Numerics;
-using System.Runtime.CompilerServices;
-
-namespace Files
+﻿namespace Foreach_Loop
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            int points = 0;
+            int points = 0 , i = 0;
             int grade = 0;
             int total = 0;
             string path = "../../../../results.txt";
 
-            FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
-            StreamReader sr = new StreamReader(fs);
+            //FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
+            //StreamReader sr = new StreamReader(fs);
 
 
-            string lineIn = sr.ReadLine();
+           // string lineIn = sr.ReadLine();
 
             try
             {
+                string[] fileContents = File.ReadAllLines(path);
 
-                while (lineIn != null)
+
+                foreach (string line in fileContents)
                 {
 
-                    Console.WriteLine(lineIn);
-                    grade = int.Parse(lineIn);
+                    Console.WriteLine(fileContents[i]);
+
+
+                    grade = int.Parse(line);
 
 
                     if (grade >= 0 && grade < 30)
@@ -60,21 +61,27 @@ namespace Files
                     {
                         points = 100;
                     }
-
+                    
                     total += points;
 
+                    i++;
 
-                    lineIn = sr.ReadLine();
+
+
+                    //lineIn = sr.ReadLine();
 
                 }
 
+
+
                 Console.WriteLine($"You got {total} points total.");
 
-                sr.Close();
-                File.AppendAllText(path , Environment.NewLine + "Total Points : " + total.ToString());
+               // sr.Close();
+                File.AppendAllText(path, Environment.NewLine + "Total Points : " + total.ToString());
+
+               
 
 
-                
             }
             catch (IOException ex) { Console.WriteLine(ex); };
         }
